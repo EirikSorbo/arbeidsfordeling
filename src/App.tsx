@@ -5,7 +5,6 @@ import { Layout } from './components/Layout'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { HistoryPage } from './pages/HistoryPage'
-import { CategoriesPage } from './pages/CategoriesPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 
@@ -21,7 +20,6 @@ export function App() {
             <Route element={<Layout />}>
               <Route index element={<DashboardPage />} />
               <Route path="historikk" element={<HistoryPage />} />
-              <Route path="kategorier" element={<CategoriesPage />} />
               <Route path="rapporter" element={<ReportsPage />} />
               <Route path="innstillinger" element={<SettingsPage />} />
             </Route>

@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useUser } from '../auth/AuthContext'
+import { CategoriesPage } from './CategoriesPage'
 import { useCategories } from '../hooks/useCategories'
 import { useEntries } from '../hooks/useEntries'
 import { useSettings } from '../hooks/useSettings'
@@ -10,6 +12,21 @@ export function SettingsPage() {
   const { active, categories } = useCategories(uid)
   const { settings, loading } = useSettings(uid)
   const { entries } = useEntries(uid)
+  const [showCategories, setShowCategories] = useState(false)
+
+  // Lukk kategori-popup med Escape, og lås bakgrunnsscroll mens den er åpen.
+  useEffect(() => {
+    if (!showCategories) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowCategories(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [showCategories])
 
   const orphanDefault =
     settings.defaultCategoryId != null &&
@@ -36,6 +53,19 @@ export function SettingsPage() {
   return (
     <div className="page">
       <h1>Innstillinger</h1>
+
+      <section className="card">
+        <h2>Kategorier</h2>
+        <button
+          className="btn btn-primary"
+          onClick={() => setShowCategories(true)}
+        >
+          Administrer kategorier
+        </button>
+        <p className="text-muted settings-help">
+          Opprett, endre rekkefølge på og arkiver kategoriene dine.
+        </p>
+      </section>
 
       <section className="card">
         <h2>Standardkategori</h2>
@@ -100,6 +130,42 @@ export function SettingsPage() {
           Eksporterer de siste 1000 registreringene.
         </p>
       </section>
+
+      {showCategories && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowCategories(false)}
+        >
+          <div
+            className="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Kategorier"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="modal-close"
+              aria-label="Lukk"
+              onClick={() => setShowCategories(false)}
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <CategoriesPage />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

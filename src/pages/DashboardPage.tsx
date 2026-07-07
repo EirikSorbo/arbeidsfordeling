@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from '../auth/AuthContext'
+import { CategoryGrid } from '../components/CategoryGrid'
 import { DurationEntryForm } from '../components/DurationEntryForm'
 import { EntryForm } from '../components/EntryForm'
 import { useActiveTimer } from '../hooks/useActiveTimer'
@@ -106,23 +107,12 @@ export function DashboardPage() {
               Du har ingen kategorier ennå. Opprett kategoriene du vil føre tid
               på først.
             </p>
-            <Link to="/kategorier" className="btn btn-primary">
+            <Link to="/innstillinger" className="btn btn-primary">
               Opprett kategorier
             </Link>
           </div>
         ) : !newEntryCategory ? (
-          <div className="quickstart-grid">
-            {active.map((c) => (
-              <button
-                key={c.id}
-                className="quickstart-btn"
-                style={{ borderColor: c.color, background: `${c.color}22` }}
-                onClick={() => setNewEntryCategoryId(c.id)}
-              >
-                <span>{c.name}</span>
-              </button>
-            ))}
-          </div>
+          <CategoryGrid categories={active} onSelect={setNewEntryCategoryId} />
         ) : (
           <div className="new-entry">
             <div className="entry-mode-toggle">
@@ -228,24 +218,16 @@ export function DashboardPage() {
               Du har ingen kategorier ennå. Opprett kategoriene du vil føre tid
               på først.
             </p>
-            <Link to="/kategorier" className="btn btn-primary">
+            <Link to="/innstillinger" className="btn btn-primary">
               Opprett kategorier
             </Link>
           </div>
         ) : (
-          <div className="quickstart-grid">
-            {active.map((c) => (
-              <button
-                key={c.id}
-                className="quickstart-btn"
-                style={{ borderColor: c.color, background: `${c.color}22` }}
-                disabled={busy || timer?.categoryId === c.id}
-                onClick={() => run(() => startTimer(uid, c.id))}
-              >
-                <span>{c.name}</span>
-              </button>
-            ))}
-          </div>
+          <CategoryGrid
+            categories={active}
+            onSelect={(id) => run(() => startTimer(uid, id))}
+            disabled={(c) => busy || timer?.categoryId === c.id}
+          />
         )}
       </section>
 
