@@ -512,6 +512,56 @@ h2 {
   flex: 1;
 }
 
+.new-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.entry-mode-toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.entry-mode-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.entry-mode-toggle button.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.entry-chosen {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.entry-chosen-name {
+  font-weight: 600;
+}
+
+.duration-preview {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
 /* ===== Filterlinje ===== */
 .filter-bar {
   display: flex;

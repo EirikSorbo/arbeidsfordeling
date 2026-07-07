@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from '../auth/AuthContext'
+import { DurationEntryForm } from '../components/DurationEntryForm'
 import { EntryForm } from '../components/EntryForm'
 import { useActiveTimer } from '../hooks/useActiveTimer'
 import { useCategories } from '../hooks/useCategories'
@@ -32,6 +33,10 @@ export function DashboardPage() {
   // Valgt kategori for ny registrering (null = vis kategori-valg først).
   const [newEntryCategoryId, setNewEntryCategoryId] = useState<string | null>(
     null,
+  )
+  // Registreringsmodus: 'duration' = bare varighet, 'time' = velg tidspunkt.
+  const [newEntryMode, setNewEntryMode] = useState<'duration' | 'time'>(
+    'duration',
   )
 
   const categoryById = new Map<string, Category>(
@@ -65,6 +70,16 @@ export function DashboardPage() {
     }))
     .sort((a, b) => b.ms - a.ms)
 
+  const newEntryCategory = newEntryCategoryId
+    ? categoryById.get(newEntryCategoryId)
+    : undefined
+  // Opptatte intervaller i dag for varighets-plassering: lagrede
+  // registreringer + en eventuell løpende timer fram til nå.
+  const busyIntervals = [
+    ...entries.map((e) => ({ start: e.start, end: e.end })),
+    ...(timer ? [{ start: timer.start, end: now }] : []),
+  ]
+
   const run = async (action: () => Promise<void>) => {
     setBusy(true)
     try {
@@ -95,7 +110,7 @@ export function DashboardPage() {
               Opprett kategorier
             </Link>
           </div>
-        ) : newEntryCategoryId === null ? (
+        ) : !newEntryCategory ? (
           <div className="quickstart-grid">
             {active.map((c) => (
               <button
@@ -109,14 +124,54 @@ export function DashboardPage() {
             ))}
           </div>
         ) : (
-          <EntryForm
-            uid={uid}
-            categories={categories}
-            initialCategoryId={newEntryCategoryId}
-            defaultCategoryId={settings.defaultCategoryId}
-            onDone={() => setNewEntryCategoryId(null)}
-            onCancel={() => setNewEntryCategoryId(null)}
-          />
+          <div className="new-entry">
+            <div className="entry-mode-toggle">
+              <button
+                type="button"
+                className={newEntryMode === 'duration' ? 'active' : ''}
+                onClick={() => setNewEntryMode('duration')}
+              >
+                Varighet
+              </button>
+              <button
+                type="button"
+                className={newEntryMode === 'time' ? 'active' : ''}
+                onClick={() => setNewEntryMode('time')}
+              >
+                Velg tidspunkt
+              </button>
+            </div>
+
+            {newEntryMode === 'duration' ? (
+              <>
+                <div className="entry-chosen">
+                  <span
+                    className="category-dot"
+                    style={{ background: newEntryCategory.color }}
+                  />
+                  <span className="entry-chosen-name">
+                    {newEntryCategory.name}
+                  </span>
+                </div>
+                <DurationEntryForm
+                  uid={uid}
+                  category={newEntryCategory}
+                  busy={busyIntervals}
+                  onDone={() => setNewEntryCategoryId(null)}
+                  onCancel={() => setNewEntryCategoryId(null)}
+                />
+              </>
+            ) : (
+              <EntryForm
+                uid={uid}
+                categories={categories}
+                initialCategoryId={newEntryCategory.id}
+                defaultCategoryId={settings.defaultCategoryId}
+                onDone={() => setNewEntryCategoryId(null)}
+                onCancel={() => setNewEntryCategoryId(null)}
+              />
+            )}
+          </div>
         )}
       </section>
 

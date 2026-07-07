@@ -82,6 +82,29 @@ export function toTimeInputValue(d: Date): string {
   return `${h}:${m}`
 }
 
+/** Tidligste ledige starttidspunkt for en registrering av lengde `durationMs`,
+ *  fra og med `baseline` (f.eks. kl. 08.00), som ikke overlapper noen av de
+ *  opptatte intervallene. `busy` trenger ikke være sortert. Fyller den
+ *  tidligste luken som er stor nok. */
+export function earliestFreeStart(
+  baseline: Date,
+  durationMs: number,
+  busy: { start: Date; end: Date }[],
+): Date {
+  const sorted = [...busy].sort(
+    (a, b) => a.start.getTime() - b.start.getTime(),
+  )
+  let start = baseline.getTime()
+  for (const b of sorted) {
+    const bs = b.start.getTime()
+    const be = b.end.getTime()
+    if (be <= start) continue // ferdig før kandidaten – ingen konflikt
+    if (bs >= start + durationMs) break // luke stor nok før dette intervallet
+    start = Math.max(start, be) // skyv kandidaten forbi det opptatte intervallet
+  }
+  return new Date(start)
+}
+
 /** Setter sammen "yyyy-mm-dd" og "HH:mm" til en lokal Date. */
 export function combineDateAndTime(dateStr: string, timeStr: string): Date {
   const [y, m, d] = dateStr.split('-').map(Number)
