@@ -29,8 +29,10 @@ export function DashboardPage() {
   const { settings } = useSettings(uid)
   const now = useNow(timer !== null)
   const [busy, setBusy] = useState(false)
-  // Øker etter hver lagring for å nullstille skjemaet (fersk standardtid).
-  const [entryFormKey, setEntryFormKey] = useState(0)
+  // Valgt kategori for ny registrering (null = vis kategori-valg først).
+  const [newEntryCategoryId, setNewEntryCategoryId] = useState<string | null>(
+    null,
+  )
 
   const categoryById = new Map<string, Category>(
     categories.map((c) => [c.id, c]),
@@ -93,14 +95,27 @@ export function DashboardPage() {
               Opprett kategorier
             </Link>
           </div>
+        ) : newEntryCategoryId === null ? (
+          <div className="quickstart-grid">
+            {active.map((c) => (
+              <button
+                key={c.id}
+                className="quickstart-btn"
+                style={{ borderColor: c.color }}
+                onClick={() => setNewEntryCategoryId(c.id)}
+              >
+                <span>{c.name}</span>
+              </button>
+            ))}
+          </div>
         ) : (
           <EntryForm
-            key={entryFormKey}
             uid={uid}
             categories={categories}
+            initialCategoryId={newEntryCategoryId}
             defaultCategoryId={settings.defaultCategoryId}
-            onDone={() => setEntryFormKey((k) => k + 1)}
-            onCancel={() => setEntryFormKey((k) => k + 1)}
+            onDone={() => setNewEntryCategoryId(null)}
+            onCancel={() => setNewEntryCategoryId(null)}
           />
         )}
       </section>

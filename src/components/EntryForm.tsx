@@ -20,6 +20,8 @@ interface Props {
   initial?: TimeEntry
   /** Forhåndsvalgt kategori for NYE registreringer (fra innstillinger). */
   defaultCategoryId?: string | null
+  /** Eksplisitt valgt kategori for NYE registreringer (går foran standard). */
+  initialCategoryId?: string
   onDone: () => void
   onCancel: () => void
 }
@@ -40,6 +42,7 @@ export function EntryForm({
   categories,
   initial,
   defaultCategoryId,
+  initialCategoryId,
   onDone,
   onCancel,
 }: Props) {
@@ -78,8 +81,12 @@ export function EntryForm({
     !initial && defaultCategoryId && options.some((c) => c.id === defaultCategoryId)
       ? defaultCategoryId
       : undefined
+  const chosen =
+    !initial && initialCategoryId && options.some((c) => c.id === initialCategoryId)
+      ? initialCategoryId
+      : undefined
   const [categoryId, setCategoryId] = useState(
-    initial?.categoryId ?? preferred ?? options[0]?.id ?? '',
+    initial?.categoryId ?? chosen ?? preferred ?? options[0]?.id ?? '',
   )
 
   const handleSubmit = async (e: React.FormEvent) => {
