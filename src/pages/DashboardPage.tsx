@@ -15,12 +15,7 @@ import {
   switchTimerCategory,
 } from '../services/timer'
 import type { Category } from '../types'
-import {
-  formatClock,
-  formatDate,
-  formatDuration,
-  formatTime,
-} from '../utils/time'
+import { formatClock, formatDate, formatTime } from '../utils/time'
 
 export function DashboardPage() {
   const user = useUser()
@@ -233,7 +228,6 @@ export function DashboardPage() {
 
       <section className="card">
         <h2>I dag</h2>
-        <p className="today-total">{formatDuration(totalMs)}</p>
         {summaryRows.length === 0 ? (
           <p className="text-muted">Ingen tid registrert i dag ennå.</p>
         ) : (
@@ -247,7 +241,9 @@ export function DashboardPage() {
                 <span className="summary-name">
                   {category?.name ?? 'Ukjent'}
                 </span>
-                <span className="summary-duration">{formatDuration(ms)}</span>
+                <span className="summary-duration">
+                  {totalMs > 0 ? Math.round((ms / totalMs) * 100) : 0} %
+                </span>
                 <span
                   className="summary-bar"
                   style={{
@@ -257,45 +253,6 @@ export function DashboardPage() {
                 />
               </li>
             ))}
-          </ul>
-        )}
-      </section>
-
-      <section className="card">
-        <h2>Dagens registreringer</h2>
-        {entries.length === 0 ? (
-          <p className="text-muted">Ingen registreringer i dag ennå.</p>
-        ) : (
-          <ul className="entry-list">
-            {entries.map((entry) => {
-              const category = categoryById.get(entry.categoryId)
-              return (
-                <li key={entry.id} className="entry-row">
-                  <span
-                    className="category-dot"
-                    style={{ background: category?.color ?? '#999' }}
-                  />
-                  <div className="entry-main">
-                    <span className="entry-name">
-                      {category?.name ?? 'Ukjent'}
-                    </span>
-                    <span className="text-muted entry-time">
-                      {formatTime(entry.start)}–{formatTime(entry.end)}
-                    </span>
-                    {entry.note && (
-                      <span className="text-muted entry-note">
-                        {entry.note}
-                      </span>
-                    )}
-                  </div>
-                  <span className="entry-duration">
-                    {formatDuration(
-                      entry.end.getTime() - entry.start.getTime(),
-                    )}
-                  </span>
-                </li>
-              )
-            })}
           </ul>
         )}
       </section>

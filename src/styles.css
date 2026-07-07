@@ -384,12 +384,6 @@ h2 {
 }
 
 /* ===== Dagens oppsummering ===== */
-.today-total {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 0.75rem;
-}
-
 .summary-list {
   list-style: none;
   margin: 0;
