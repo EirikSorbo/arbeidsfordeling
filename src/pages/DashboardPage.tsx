@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from '../auth/AuthContext'
+import { EntryForm } from '../components/EntryForm'
 import { useActiveTimer } from '../hooks/useActiveTimer'
 import { useCategories } from '../hooks/useCategories'
 import { useNow } from '../hooks/useNow'
+import { useSettings } from '../hooks/useSettings'
 import { useTodayEntries } from '../hooks/useTodayEntries'
 import {
   startTimer,
@@ -24,8 +26,11 @@ export function DashboardPage() {
   const { categories, active, loading: categoriesLoading } = useCategories(uid)
   const { timer } = useActiveTimer(uid)
   const { entries } = useTodayEntries(uid)
+  const { settings } = useSettings(uid)
   const now = useNow(timer !== null)
   const [busy, setBusy] = useState(false)
+  // Øker etter hver lagring for å nullstille skjemaet (fersk standardtid).
+  const [entryFormKey, setEntryFormKey] = useState(0)
 
   const categoryById = new Map<string, Category>(
     categories.map((c) => [c.id, c]),
@@ -73,6 +78,32 @@ export function DashboardPage() {
   return (
     <div className="page">
       <p className="page-date">{formatDate(new Date())}</p>
+
+      <section className="card">
+        <h2>Ny registrering</h2>
+        {categoriesLoading ? (
+          <p className="text-muted">Laster kategorier …</p>
+        ) : active.length === 0 ? (
+          <div className="empty-state">
+            <p className="text-muted">
+              Du har ingen kategorier ennå. Opprett kategoriene du vil føre tid
+              på først.
+            </p>
+            <Link to="/kategorier" className="btn btn-primary">
+              Opprett kategorier
+            </Link>
+          </div>
+        ) : (
+          <EntryForm
+            key={entryFormKey}
+            uid={uid}
+            categories={categories}
+            defaultCategoryId={settings.defaultCategoryId}
+            onDone={() => setEntryFormKey((k) => k + 1)}
+            onCancel={() => setEntryFormKey((k) => k + 1)}
+          />
+        )}
+      </section>
 
       {timer && (
         <section className="card timer-card">
