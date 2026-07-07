@@ -1,0 +1,597 @@
+/* ===== Grunnlag ===== */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1a1d21;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --danger: #dc2626;
+  --danger-dark: #b91c1c;
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.fullscreen-center {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ===== App-skall ===== */
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 5.5rem; /* plass til bunn-nav på mobil */
+}
+
+/* ===== Navigasjon ===== */
+.app-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.5rem 0.25rem;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.nav-item-active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Desktop: nav øverst i stedet for bunnen */
+@media (min-width: 768px) {
+  .app-nav {
+    position: sticky;
+    top: 55px;
+    bottom: auto;
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+    order: -1;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .app {
+    display: flex;
+  }
+
+  .app-header {
+    order: -2;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 6px;
+    font-size: 0.85rem;
+    padding: 0.65rem 1rem;
+  }
+
+  .app-main {
+    padding-bottom: 2rem;
+  }
+}
+
+/* ===== Sider og kort ===== */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-date {
+  margin: 0;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.1rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* ===== Knapper ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--border);
+  color: var(--text);
+  transition: filter 0.1s;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  filter: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-small {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.btn-icon {
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  font-size: 1rem;
+}
+
+.btn-google {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-stop {
+  background: var(--danger);
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+}
+
+.btn-stop:hover:not(:disabled) {
+  background: var(--danger-dark);
+  filter: none;
+}
+
+/* ===== Innlogging ===== */
+.login-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.login-logo {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.login-card p {
+  margin: 0 0 0.5rem;
+}
+
+.error-text {
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ===== Timer-kort ===== */
+.timer-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid var(--primary);
+}
+
+.timer-category {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.timer-clock {
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.timer-since {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.timer-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.timer-switch select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+  background: var(--surface);
+}
+
+/* ===== Hurtigstart ===== */
+.quickstart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.6rem;
+}
+
+.quickstart-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.9rem 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  min-height: 76px;
+  transition: transform 0.05s, box-shadow 0.1s;
+}
+
+.quickstart-btn:hover:not(:disabled) {
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+.quickstart-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.quickstart-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* ===== Dagens oppsummering ===== */
+.today-total {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.summary-name {
+  font-weight: 500;
+}
+
+.summary-duration {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.summary-bar {
+  grid-column: 2 / 4;
+  height: 6px;
+  border-radius: 3px;
+  min-width: 6px;
+}
+
+/* ===== Registreringsliste ===== */
+.entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.entry-row:last-child {
+  border-bottom: none;
+}
+
+.entry-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.entry-name {
+  font-weight: 500;
+}
+
+.entry-time,
+.entry-note {
+  font-size: 0.85rem;
+}
+
+.entry-note {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-duration {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===== Kategorier ===== */
+.category-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.category-row:last-child {
+  border-bottom: none;
+}
+
+.category-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.category-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.category-archived {
+  opacity: 0.6;
+}
+
+/* ===== Kategori-skjema ===== */
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.category-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.category-form input[type='text'] {
+  padding: 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.category-form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.category-form legend {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0;
+  margin-bottom: 0.4rem;
+}
+
+.swatch-grid,
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.swatch-selected {
+  border-color: var(--text);
+}
+
+.icon-choice {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-selected {
+  border-color: var(--primary);
+  background: #eff6ff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
