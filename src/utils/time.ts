@@ -4,6 +4,34 @@ export function startOfDay(d: Date): Date {
   return r
 }
 
+/** Legger til n dager. Bruker setDate (kalender-aritmetikk) så det er
+ *  robust mot sommertid — aldri n * 86400000 ms. */
+export function addDays(d: Date, n: number): Date {
+  const r = new Date(d)
+  r.setDate(r.getDate() + n)
+  return r
+}
+
+/** Første dag i uken som inneholder d. weekStart: 0 = søndag, 1 = mandag. */
+export function startOfWeek(d: Date, weekStart: 0 | 1): Date {
+  const r = startOfDay(d)
+  const diff = (r.getDay() - weekStart + 7) % 7
+  r.setDate(r.getDate() - diff)
+  return r
+}
+
+/** ISO-8601 ukenummer (torsdag-forankret, mandag-basert per definisjon —
+ *  uavhengig av weekStart). Regner i UTC internt for å unngå sommertid-drift. */
+export function isoWeekNumber(d: Date): number {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+  const dayNum = (date.getUTCDay() + 6) % 7 // mandag = 0 … søndag = 6
+  date.setUTCDate(date.getUTCDate() - dayNum + 3) // torsdag i denne uken
+  const firstThursday = new Date(Date.UTC(date.getUTCFullYear(), 0, 4))
+  const firstDayNum = (firstThursday.getUTCDay() + 6) % 7
+  firstThursday.setUTCDate(firstThursday.getUTCDate() - firstDayNum + 3)
+  return 1 + Math.round((date.getTime() - firstThursday.getTime()) / 604800000)
+}
+
 /** "1:23:45" — for løpende timer-visning */
 export function formatClock(ms: number): string {
   const totalSec = Math.max(0, Math.floor(ms / 1000))

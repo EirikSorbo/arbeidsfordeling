@@ -18,6 +18,8 @@ interface Props {
   categories: Category[]
   /** Registrering som redigeres — utelates ved ny registrering. */
   initial?: TimeEntry
+  /** Forhåndsvalgt kategori for NYE registreringer (fra innstillinger). */
+  defaultCategoryId?: string | null
   onDone: () => void
   onCancel: () => void
 }
@@ -37,6 +39,7 @@ export function EntryForm({
   uid,
   categories,
   initial,
+  defaultCategoryId,
   onDone,
   onCancel,
 }: Props) {
@@ -69,8 +72,14 @@ export function EntryForm({
     return active
   }, [categories, initial])
 
+  // Forrang: redigert registrerings egen kategori > lagret standardkategori
+  // (om den fortsatt er aktiv) > første aktive kategori.
+  const preferred =
+    !initial && defaultCategoryId && options.some((c) => c.id === defaultCategoryId)
+      ? defaultCategoryId
+      : undefined
   const [categoryId, setCategoryId] = useState(
-    initial?.categoryId ?? options[0]?.id ?? '',
+    initial?.categoryId ?? preferred ?? options[0]?.id ?? '',
   )
 
   const handleSubmit = async (e: React.FormEvent) => {

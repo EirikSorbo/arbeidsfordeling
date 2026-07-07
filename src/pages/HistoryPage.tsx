@@ -3,6 +3,7 @@ import { useUser } from '../auth/AuthContext'
 import { EntryForm } from '../components/EntryForm'
 import { useCategories } from '../hooks/useCategories'
 import { useEntries } from '../hooks/useEntries'
+import { useSettings } from '../hooks/useSettings'
 import { deleteEntry } from '../services/entries'
 import type { Category, TimeEntry } from '../types'
 import {
@@ -25,6 +26,7 @@ export function HistoryPage() {
   const uid = user.uid
   const { entries, loading } = useEntries(uid)
   const { categories } = useCategories(uid)
+  const { settings } = useSettings(uid)
 
   const [showNewForm, setShowNewForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -122,6 +124,7 @@ export function HistoryPage() {
           <EntryForm
             uid={uid}
             categories={categories}
+            defaultCategoryId={settings.defaultCategoryId}
             onDone={() => setShowNewForm(false)}
             onCancel={() => setShowNewForm(false)}
           />
