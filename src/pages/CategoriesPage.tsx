@@ -11,9 +11,9 @@ import type { CategoryInput } from '../services/categories'
 import type { Category } from '../types'
 
 const COLORS = [
-  '#2563eb', '#0891b2', '#059669', '#65a30d',
-  '#d97706', '#dc2626', '#e11d48', '#c026d3',
-  '#7c3aed', '#4f46e5', '#0d9488', '#78716c',
+  '#5b86d6', '#46a6bd', '#4fb08a', '#8bbd63',
+  '#e0a95c', '#d6786f', '#dd7897', '#c17ec2',
+  '#9a86d6', '#7382cf', '#4fa89f', '#a8a29e',
 ]
 
 interface FormProps {

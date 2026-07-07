@@ -101,7 +101,7 @@ export function DashboardPage() {
               <button
                 key={c.id}
                 className="quickstart-btn"
-                style={{ borderColor: c.color }}
+                style={{ borderColor: c.color, background: `${c.color}22` }}
                 onClick={() => setNewEntryCategoryId(c.id)}
               >
                 <span>{c.name}</span>
@@ -183,7 +183,7 @@ export function DashboardPage() {
               <button
                 key={c.id}
                 className="quickstart-btn"
-                style={{ borderColor: c.color }}
+                style={{ borderColor: c.color, background: `${c.color}22` }}
                 disabled={busy || timer?.categoryId === c.id}
                 onClick={() => run(() => startTimer(uid, c.id))}
               >
