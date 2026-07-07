@@ -16,11 +16,6 @@ const COLORS = [
   '#7c3aed', '#4f46e5', '#0d9488', '#78716c',
 ]
 
-const ICONS = [
-  '💼', '📚', '🎓', '✉️', '📞', '👥', '📝', '🖥️',
-  '🎵', '🎹', '🎤', '📋', '🗂️', '🔧', '🎨', '📖',
-]
-
 interface FormProps {
   initial?: Category
   onSave: (input: CategoryInput) => Promise<void>
@@ -30,7 +25,6 @@ interface FormProps {
 function CategoryForm({ initial, onSave, onCancel }: FormProps) {
   const [name, setName] = useState(initial?.name ?? '')
   const [color, setColor] = useState(initial?.color ?? COLORS[0])
-  const [icon, setIcon] = useState(initial?.icon ?? ICONS[0])
   const [busy, setBusy] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +32,7 @@ function CategoryForm({ initial, onSave, onCancel }: FormProps) {
     if (!name.trim()) return
     setBusy(true)
     try {
-      await onSave({ name: name.trim(), color, icon })
+      await onSave({ name: name.trim(), color })
     } catch (err) {
       console.error(err)
       alert('Kunne ikke lagre kategorien. Prøv igjen.')
@@ -73,22 +67,6 @@ function CategoryForm({ initial, onSave, onCancel }: FormProps) {
               onClick={() => setColor(c)}
               aria-label={`Farge ${c}`}
             />
-          ))}
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Ikon</legend>
-        <div className="icon-grid">
-          {ICONS.map((i) => (
-            <button
-              key={i}
-              type="button"
-              className={i === icon ? 'icon-choice icon-selected' : 'icon-choice'}
-              onClick={() => setIcon(i)}
-            >
-              {i}
-            </button>
           ))}
         </div>
       </fieldset>
@@ -187,9 +165,7 @@ export function CategoriesPage() {
                       className="category-dot"
                       style={{ background: category.color }}
                     />
-                    <span className="category-name">
-                      {category.icon} {category.name}
-                    </span>
+                    <span className="category-name">{category.name}</span>
                     <div className="category-actions">
                       <button
                         className="btn btn-icon"
@@ -243,9 +219,7 @@ export function CategoriesPage() {
                   className="category-dot"
                   style={{ background: category.color }}
                 />
-                <span className="category-name">
-                  {category.icon} {category.name}
-                </span>
+                <span className="category-name">{category.name}</span>
                 <div className="category-actions">
                   <button
                     className="btn btn-ghost btn-small"

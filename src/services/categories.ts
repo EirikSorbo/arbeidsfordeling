@@ -10,7 +10,6 @@ import { categoriesCol, categoryDoc } from '../firebase/paths'
 export interface CategoryInput {
   name: string
   color: string
-  icon: string
 }
 
 export async function createCategory(

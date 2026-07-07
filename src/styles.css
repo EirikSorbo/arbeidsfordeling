@@ -126,11 +126,6 @@ h2 {
   font-weight: 600;
 }
 
-.nav-icon {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
 /* Desktop: nav øverst i stedet for bunnen */
 @media (min-width: 768px) {
   .app-nav {
@@ -287,11 +282,6 @@ h2 {
   gap: 0.75rem;
 }
 
-.login-logo {
-  font-size: 3rem;
-  line-height: 1;
-}
-
 .login-card p {
   margin: 0 0 0.5rem;
 }
@@ -380,11 +370,6 @@ h2 {
 .quickstart-btn:disabled {
   opacity: 0.45;
   cursor: default;
-}
-
-.quickstart-icon {
-  font-size: 1.5rem;
-  line-height: 1;
 }
 
 /* ===== Dagens oppsummering ===== */
@@ -773,8 +758,7 @@ h2 {
   margin-bottom: 0.4rem;
 }
 
-.swatch-grid,
-.icon-grid {
+.swatch-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -791,22 +775,6 @@ h2 {
 
 .swatch-selected {
   border-color: var(--text);
-}
-
-.icon-choice {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 2px solid var(--border);
-  background: var(--surface);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0;
-}
-
-.icon-selected {
-  border-color: var(--primary);
-  background: #eff6ff;
 }
 
 .form-actions {

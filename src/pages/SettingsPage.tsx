@@ -48,12 +48,12 @@ export function SettingsPage() {
           <option value="">Ingen</option>
           {orphanDefault && (
             <option value={settings.defaultCategoryId ?? ''}>
-              ⚠ Tidligere valg (utilgjengelig) — velg på nytt
+              Tidligere valg (utilgjengelig) — velg på nytt
             </option>
           )}
           {active.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.icon} {c.name}
+              {c.name}
             </option>
           ))}
         </select>

@@ -190,7 +190,7 @@ export function ReportsPage() {
                       style={{ background: category?.color ?? '#999' }}
                     />
                     <span className="summary-name">
-                      {category?.icon} {category?.name ?? 'Ukjent'}
+                      {category?.name ?? 'Ukjent'}
                     </span>
                     <span className="summary-duration">
                       {formatDuration(slice.ms)}

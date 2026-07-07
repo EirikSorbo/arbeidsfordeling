@@ -82,7 +82,7 @@ export function DashboardPage() {
               style={{ background: timerCategory?.color ?? '#999' }}
             />
             <span className="timer-category-name">
-              {timerCategory?.icon} {timerCategory?.name ?? 'Ukjent kategori'}
+              {timerCategory?.name ?? 'Ukjent kategori'}
             </span>
           </div>
           <div className="timer-clock">{formatClock(elapsedMs)}</div>
@@ -108,7 +108,7 @@ export function DashboardPage() {
               >
                 {active.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.icon} {c.name}
+                    {c.name}
                   </option>
                 ))}
               </select>
@@ -141,7 +141,6 @@ export function DashboardPage() {
                 disabled={busy || timer?.categoryId === c.id}
                 onClick={() => run(() => startTimer(uid, c.id))}
               >
-                <span className="quickstart-icon">{c.icon}</span>
                 <span>{c.name}</span>
               </button>
             ))}
@@ -163,7 +162,7 @@ export function DashboardPage() {
                   style={{ background: category?.color ?? '#999' }}
                 />
                 <span className="summary-name">
-                  {category?.icon} {category?.name ?? 'Ukjent'}
+                  {category?.name ?? 'Ukjent'}
                 </span>
                 <span className="summary-duration">{formatDuration(ms)}</span>
                 <span
@@ -195,7 +194,7 @@ export function DashboardPage() {
                   />
                   <div className="entry-main">
                     <span className="entry-name">
-                      {category?.icon} {category?.name ?? 'Ukjent'}
+                      {category?.name ?? 'Ukjent'}
                     </span>
                     <span className="text-muted entry-time">
                       {formatTime(entry.start)}–{formatTime(entry.end)}

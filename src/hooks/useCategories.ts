@@ -18,7 +18,6 @@ export function useCategories(uid: string) {
             id: d.id,
             name: data.name,
             color: data.color,
-            icon: data.icon,
             order: data.order,
             archived: data.archived ?? false,
           }

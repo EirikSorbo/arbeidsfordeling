@@ -147,7 +147,7 @@ export function HistoryPage() {
             <option value="all">Alle kategorier</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.icon} {c.name}
+                {c.name}
               </option>
             ))}
           </select>
@@ -218,7 +218,7 @@ export function HistoryPage() {
                     />
                     <div className="entry-main">
                       <span className="entry-name">
-                        {category?.icon} {category?.name ?? 'Ukjent'}
+                        {category?.name ?? 'Ukjent'}
                       </span>
                       <span className="text-muted entry-time">
                         {formatTime(entry.start)}–{formatTime(entry.end)}

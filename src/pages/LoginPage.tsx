@@ -29,7 +29,6 @@ export function LoginPage() {
   return (
     <div className="fullscreen-center">
       <div className="login-card">
-        <div className="login-logo">⏱️</div>
         <h1>Arbeidsfordeling</h1>
         <p className="text-muted">
           Registrer hvordan arbeidstiden din faktisk brukes.

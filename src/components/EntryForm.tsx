@@ -165,7 +165,7 @@ export function EntryForm({
           {options.length === 0 && <option value="">Ingen kategorier</option>}
           {options.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.icon} {c.name}
+              {c.name}
             </option>
           ))}
         </select>

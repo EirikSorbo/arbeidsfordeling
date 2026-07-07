@@ -2,11 +2,11 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 
 const navItems = [
-  { to: '/', label: 'Hjem', icon: '🏠', end: true },
-  { to: '/historikk', label: 'Historikk', icon: '🕘' },
-  { to: '/kategorier', label: 'Kategorier', icon: '🏷️' },
-  { to: '/rapporter', label: 'Rapporter', icon: '📊' },
-  { to: '/innstillinger', label: 'Innstillinger', icon: '⚙️' },
+  { to: '/', label: 'Hjem', end: true },
+  { to: '/historikk', label: 'Historikk' },
+  { to: '/kategorier', label: 'Kategorier' },
+  { to: '/rapporter', label: 'Rapporter' },
+  { to: '/innstillinger', label: 'Innstillinger' },
 ]
 
 export function Layout() {
@@ -15,7 +15,7 @@ export function Layout() {
   return (
     <div className="app">
       <header className="app-header">
-        <span className="brand">⏱️ Arbeidsfordeling</span>
+        <span className="brand">Arbeidsfordeling</span>
         <div className="header-user">
           {user?.photoURL && (
             <img
@@ -45,7 +45,6 @@ export function Layout() {
               isActive ? 'nav-item nav-item-active' : 'nav-item'
             }
           >
-            <span className="nav-icon">{item.icon}</span>
             <span className="nav-label">{item.label}</span>
           </NavLink>
         ))}
